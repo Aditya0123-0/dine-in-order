@@ -23,10 +23,17 @@ public class UserController {
         user = userService.registerUser(user);
         return ResponseBuilder.success(HttpStatus.CREATED,"Created User", user);
     }
+
     @GetMapping("/{userid}")
     public ResponseEntity<ResponseStructure<User>> findUserById(@PathVariable Long userid){
         User user = userService.findUserById(userid);
         return  ResponseBuilder.success(HttpStatus.OK,"Found User",user);
+    }
+
+    @PutMapping("/{userid}")
+    public ResponseEntity<ResponseStructure<User>> updateUserById(@PathVariable Long userid,@RequestBody User user){
+        user = userService.updateUserById(userid,user);
+        return ResponseBuilder.success(HttpStatus.OK,"User Updated",user);
     }
 
 
