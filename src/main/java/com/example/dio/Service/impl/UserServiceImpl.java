@@ -28,21 +28,13 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(()->new UserNotFoundByIdException("Failed to find User, User not found by Id"));
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public User updateUserById(Long userid, User user) {
+        User exsistingUser = userRepository.findById(userid)
+                .orElseThrow(()->new UserNotFoundByIdException("Failed to find User, User not found by Id"));
+        this.mapToNewUser(user,exsistingUser);
+        return userRepository.save(exsistingUser);
+    }
 
 
     private  User getUser(UserRole role) {
