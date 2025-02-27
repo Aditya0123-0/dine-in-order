@@ -9,10 +9,7 @@ import com.example.dio.util.ResponseStructure;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -24,8 +21,12 @@ public class UserController {
     @PostMapping
     public ResponseEntity<ResponseStructure<User>> register(@RequestBody User user){
         user = userService.registerUser(user);
-
         return ResponseBuilder.success(HttpStatus.CREATED,"Created User", user);
+    }
+    @GetMapping("/{userid}")
+    public ResponseEntity<ResponseStructure<User>> findUserById(@PathVariable Long userid){
+        User user = userService.findUserById(userid);
+        return  ResponseBuilder.success(HttpStatus.OK,"Found User",user);
     }
 
 

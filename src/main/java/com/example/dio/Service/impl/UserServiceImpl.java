@@ -2,6 +2,7 @@ package com.example.dio.Service.impl;
 
 import com.example.dio.Service.UserService;
 import com.example.dio.UserRole;
+import com.example.dio.exception.UserNotFoundByIdException;
 import com.example.dio.module.Admin;
 import com.example.dio.module.Staff;
 import com.example.dio.module.User;
@@ -20,6 +21,29 @@ public class UserServiceImpl implements UserService {
         this.mapToNewUser(user, user1);
         return userRepository.save(user1);
     }
+
+    @Override
+    public User findUserById(Long userid) {
+        return userRepository.findById(userid)
+                .orElseThrow(()->new UserNotFoundByIdException("Failed to find User, User not found by Id"));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private  User getUser(UserRole role) {
         User user ;
