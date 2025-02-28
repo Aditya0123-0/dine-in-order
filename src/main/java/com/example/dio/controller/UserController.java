@@ -1,6 +1,7 @@
 package com.example.dio.controller;
 
 import com.example.dio.Service.UserService;
+import com.example.dio.dto.response.UserResponse;
 import com.example.dio.module.Admin;
 import com.example.dio.module.Staff;
 import com.example.dio.module.User;
