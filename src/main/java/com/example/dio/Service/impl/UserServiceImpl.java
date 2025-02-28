@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
         switch (role){
             case ADMIN -> user = new Admin();
             case STAFF -> user = new Staff();
-            case null, default -> throw new RuntimeException("Failed to register User, Invalide User");
+            case null, default -> throw new RuntimeException("Failed to register User, Invalid User");
         }
         return user;
     }
