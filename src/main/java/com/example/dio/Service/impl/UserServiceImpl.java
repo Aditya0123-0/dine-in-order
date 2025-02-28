@@ -2,7 +2,11 @@ package com.example.dio.Service.impl;
 
 import com.example.dio.Service.UserService;
 import com.example.dio.UserRole;
+import com.example.dio.dto.request.RegistrationRequest;
+import com.example.dio.dto.request.UserRequest;
+import com.example.dio.dto.response.UserResponse;
 import com.example.dio.exception.UserNotFoundByIdException;
+import com.example.dio.mapper.UserMapper;
 import com.example.dio.module.Admin;
 import com.example.dio.module.Staff;
 import com.example.dio.module.User;
@@ -15,25 +19,44 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     @Override
-    public User registerUser(User user) {
-        User user1= this.getUser(user.getUserrole());
-        this.mapToNewUser(user, user1);
-        return userRepository.save(user1);
+    public UserResponse registerUser(RegistrationRequest registrationRequest) {
+        User user= this.getUser(registrationRequest.getUserrole());
+        userMapper.mapUserToEntity(registrationRequest, user);
+        userRepository.save(user);
+        return userMapper.mapToUserResponse(user);
     }
 
     @Override
-    public User findUserById(Long userid) {
-        return userRepository.findById(userid)
+    public UserResponse findUserById(Long userid) {
+        User user=userRepository.findById(userid)
                 .orElseThrow(()->new UserNotFoundByIdException("Failed to find User, User not found by Id"));
+        return userMapper.mapToUserResponse(user);
+
+        /* Using Lamda expression
+        * userRepository.findById(userid)
+        *       .map(userMapper::mapToUserResponse)
+                .orElseThrow(()->new UserNotFoundByIdException("Failed to find User, User not found by Id"));
+        * */
     }
 
     @Override
-    public User updateUserById(Long userid, User user) {
+    public UserResponse updateUserById(Long userid, UserRequest request) {
         User exsistingUser = userRepository.findById(userid)
                 .orElseThrow(()->new UserNotFoundByIdException("Failed to find User, User not found by Id"));
-        this.mapToNewUser(user,exsistingUser);
-        return userRepository.save(exsistingUser);
+        userMapper.mapUserToEntity(request,exsistingUser);
+        userRepository.save(exsistingUser);
+        return userMapper.mapToUserResponse(exsistingUser);
+
+        /*Uisng Lamda Expression
+        * userRepository.findById(userid)
+                .map(User exUser ->{
+                userMapper.mapUserToEntity(userRequest,exUser);
+                userRepository.save(exUser);
+                return userMapper.mapToUserResponse(exUser)
+                .orElseThrow(()->new UserNotFoundByIdException("Failed to find User, User not found by Id"));
+        * */
     }
 
 
@@ -47,11 +70,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private  void mapToNewUser(User user, User user1) {
-        user1.setUsername(user.getUsername());
-        user1.setUseremail(user.getUseremail());
-        user1.setUserpassword(user.getUserpassword());
-        user1.setUserrole(user.getUserrole());
-        user1.setUserphoneNo(user.getUserphoneNo());
-    }
+
+
 }

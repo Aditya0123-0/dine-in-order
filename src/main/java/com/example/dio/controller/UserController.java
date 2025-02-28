@@ -1,6 +1,8 @@
 package com.example.dio.controller;
 
 import com.example.dio.Service.UserService;
+import com.example.dio.dto.request.RegistrationRequest;
+import com.example.dio.dto.request.UserRequest;
 import com.example.dio.dto.response.UserResponse;
 import com.example.dio.module.Admin;
 import com.example.dio.module.Staff;
@@ -20,21 +22,21 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<ResponseStructure<User>> register(@RequestBody User user){
-        user = userService.registerUser(user);
-        return ResponseBuilder.success(HttpStatus.CREATED,"Created User", user);
+    public ResponseEntity<ResponseStructure<UserResponse>> register(@RequestBody RegistrationRequest registrationRequest){
+        UserResponse response = userService.registerUser(registrationRequest);
+        return ResponseBuilder.success(HttpStatus.CREATED,"Created User", response);
     }
 
     @GetMapping("/{userid}")
-    public ResponseEntity<ResponseStructure<User>> findUserById(@PathVariable Long userid){
-        User user = userService.findUserById(userid);
-        return  ResponseBuilder.success(HttpStatus.OK,"Found User",user);
+    public ResponseEntity<ResponseStructure<UserResponse>> findUserById(@PathVariable Long userid){
+        UserResponse response = userService.findUserById(userid);
+        return  ResponseBuilder.success(HttpStatus.OK,"Found User",response);
     }
 
     @PutMapping("/{userid}")
-    public ResponseEntity<ResponseStructure<User>> updateUserById(@PathVariable Long userid,@RequestBody User user){
-        user = userService.updateUserById(userid,user);
-        return ResponseBuilder.success(HttpStatus.OK,"User Updated",user);
+    public ResponseEntity<ResponseStructure<UserResponse>> updateUserById(@PathVariable Long userid, @RequestBody UserRequest request){
+        UserResponse response = userService.updateUserById(userid,request);
+        return ResponseBuilder.success(HttpStatus.OK,"User Updated",response);
     }
 
 
