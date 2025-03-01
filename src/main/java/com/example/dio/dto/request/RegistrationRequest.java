@@ -13,9 +13,11 @@ public class RegistrationRequest {
     @NotEmpty(message = "Username cannot be null or blank")
     @NotBlank(message = "Username cannot be blank")
     private String username;
+
     @NotEmpty(message = "Email cannot be null ")
     @NotBlank(message = "Email cannot br blank")
     private String useremail;
+
     private String userpassword;
     private String userphoneNo;
     private UserRole userrole;

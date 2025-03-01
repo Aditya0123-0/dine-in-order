@@ -4,6 +4,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public class ResponseBuilder {
     public static <T> ResponseEntity<ResponseStructure<T>> success(HttpStatus status, String message, T data) {
         ResponseStructure<T> structure = ResponseStructure.<T>builder()
@@ -37,6 +39,4 @@ public class ResponseBuilder {
         return ResponseEntity.status(status)
                 .body(error);
     }
-
-
 }
