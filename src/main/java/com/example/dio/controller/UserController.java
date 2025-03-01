@@ -6,6 +6,7 @@ import com.example.dio.dto.request.UserRequest;
 import com.example.dio.dto.response.UserResponse;
 import com.example.dio.util.ResponseBuilder;
 import com.example.dio.util.ResponseStructure;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<ResponseStructure<UserResponse>> register(@RequestBody RegistrationRequest registrationRequest){
+    public ResponseEntity<ResponseStructure<UserResponse>> register(@RequestBody @Valid RegistrationRequest registrationRequest){
         UserResponse response = userService.registerUser(registrationRequest);
         return ResponseBuilder.success(HttpStatus.CREATED,"Created User", response);
     }
