@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         /* Using Lamda expression
         * userRepository.findById(userid)
         *       .map(userMapper::mapToUserResponse)
-                .orElseThrow(()->new UserNotFoundByIdException("Failed to find User, User not found by Id"));
+        *    .orElseThrow(()->new UserNotFoundByIdException("Failed to find User, User not found by Id"));
         * */
     }
 

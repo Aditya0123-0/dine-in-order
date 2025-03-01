@@ -11,7 +11,6 @@ import org.mapstruct.MappingTarget;
 public interface UserMapper {
      UserResponse mapToUserResponse(User user) ;
 
-
      void mapUserToEntity(RegistrationRequest registrationRequest,@MappingTarget User user) ;
 
      void mapUserToEntity(UserRequest userRequest,@MappingTarget User user) ;
