@@ -39,7 +39,7 @@ public class UserController {
     })
     public ResponseEntity<ResponseStructure<UserResponse>> register(@RequestBody @Valid RegistrationRequest registrationRequest){
         UserResponse response = userService.registerUser(registrationRequest);
-        return ResponseBuilder.success(HttpStatus.CREATED,"Created User", response);
+        return ResponseBuilder.created( response,"Created User");
     }
 
 
@@ -57,7 +57,7 @@ public class UserController {
     })
     public ResponseEntity<ResponseStructure<UserResponse>> findUserById(@PathVariable Long userid){
         UserResponse response = userService.findUserById(userid);
-        return  ResponseBuilder.success(HttpStatus.OK,"Found User",response);
+        return  ResponseBuilder.ok(response,"Found User");
     }
 
 
