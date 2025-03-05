@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(exsistingUser);
         return userMapper.mapToUserResponse(exsistingUser);
 
-        /*Uisng Lamda Expression
+        /* Uisng Lamda Expression
         * userRepository.findById(userid)
                 .map(User exUser ->{
                 userMapper.mapUserToEntity(userRequest,exUser);
@@ -60,6 +60,14 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    /**
+     * This method creates and returns an instance of a specific User subtype based on the provided UserRole.
+     * If the role is ADMIN, it returns an Admin instance.
+     * If the role is STAFF, it returns a Staff instance.
+     * If the role is null or an unrecognized value, it throws a RuntimeException.
+     * @param role The role of the user, which determines the type of User to be created.
+     * @return An instance of either Admin or Staff, depending on the role.
+     */
     private  User getUser(UserRole role) {
         User user ;
         switch (role){
@@ -69,7 +77,4 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
-
-
-
 }
