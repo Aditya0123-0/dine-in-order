@@ -2,9 +2,9 @@ spring:
   application:
     name: dine-in-order-api
   datasource:
-    url: jdbc:mysql://localhost:3306/dine_in_order_db?createDatabaseIfNotExist=true
-    username: root
-    password: Aditya@8088
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
 
 
   jpa:
@@ -13,5 +13,6 @@ spring:
     hibernate:
       ddl-auto: update
 
-
+app:
+  base-url: /api/v1
 #spring.jap.format-sql= true
